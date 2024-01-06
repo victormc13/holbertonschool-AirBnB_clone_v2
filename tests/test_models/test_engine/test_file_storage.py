@@ -3,6 +3,9 @@
 import unittest
 from models.base_model import BaseModel
 from models import storage
+from io import StringIO
+from unittest.mock import patch
+import console
 import os
 
 
@@ -21,7 +24,7 @@ class test_fileStorage(unittest.TestCase):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_obj_list_empty(self):
@@ -107,3 +110,19 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+    def test_create_command(self):
+        """ Test create command with valid parameters """
+        hbnb_command = console.HBNBCommand()
+        with unittest.mock.patch(
+                'sys.stdout', new_callable=StringIO) as mock_stdout:
+            hbnb_command.onecmd("create BaseModel name=\"test\"")
+            output = mock_stdout.getvalue().strip()
+            self.assertEqual(len(output), 36)  # Expected length of UUID
+
+            # Check if the object is actually created
+            with unittest.mock.patch(
+                    'sys.stdout', new_callable=StringIO) as mock_stdout:
+                hbnb_command.onecmd("all BaseModel")
+                output = mock_stdout.getvalue().strip()
+                self.assertIn("test", output)
