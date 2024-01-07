@@ -51,7 +51,12 @@ class FileStorage:
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
-                temp = json.load(f)
+                try:
+                    temp = json.load(f)
+                except json.decoder.JSONDecodeError:
+                    # Handle empty file
+                    pass
+                
                 for key, val in temp.items():
                     self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
@@ -63,4 +68,4 @@ class FileStorage:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
             if key in FileStorage.__objects:
                 del FileStorage.__objects[key]
-                self.save()
+            self.save()
