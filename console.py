@@ -127,6 +127,16 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
+        
+        # Handle the case when creating a City with a specified state_id
+        if class_name == 'City':
+            for param in params:
+                key, value = param.split('=')
+                if key == 'state_id':
+                    # Check if the specified state_id exists
+                    if value not in storage.all(State).keys():
+                        print("** no instance found **")
+                        return
 
         # Create an instance of the class
         new_instance = HBNBCommand.classes[class_name]()
@@ -148,6 +158,7 @@ class HBNBCommand(cmd.Cmd):
 
         storage.save()
         print(new_instance.id)
+        print(new_instance.name)
         storage.save()
 
     def help_create(self):
