@@ -20,3 +20,6 @@ class test_state(test_basemodel):
         new = State()
         self.assertTrue(hasattr(new, 'name'))
         self.assertEqual(type(new.name), str)
+
+if __name__ == '__main__':
+    unittest.main()
