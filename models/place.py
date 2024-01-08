@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
     
@@ -23,3 +23,4 @@ class Place(BaseModel):
     # Add a relationship to City and User
     city = relationship("City", back_populates="places")
     user = relationship("User", back_populates="places")
+    reviews = relationship("Review", back_populates="place", cascade="all, delete-orphan")
