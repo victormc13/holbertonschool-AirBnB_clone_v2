@@ -3,7 +3,6 @@
 Contains the class DBStorage
 """
 
-from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
