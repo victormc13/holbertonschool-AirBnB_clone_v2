@@ -7,7 +7,7 @@ from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """ State class """
     if storage_t == 'db':
         __tablename__ = 'states'
