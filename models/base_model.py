@@ -17,7 +17,7 @@ else:
 
 class BaseModel:
     """A base class for all hbnb models"""
-    if storage_t = 'db':
+    if storage_t == 'db':
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
         updated_at = Column(DateTime, default=datetime.utcnow)
@@ -60,12 +60,12 @@ class BaseModel:
     def to_dict(self):
         """Convert instance into dict format"""
         dictionary = self.__dict__.copy()
-        if
-        dictionary = self.__dict__.copy()
         if "created_at" in dictionary:
-            dictionary["created_at"] = dictionary["created_at"].strftime(time)
+            dictionary["created_at"] = dictionary["created_at"].strftime(
+                    time_format)
         if "updated_at" in dictionary:
-            dictionary["updated_at"] = dictionary["updated_at"].strftime(time)
+            dictionary["updated_at"] = dictionary["updated_at"].strftime(
+                    time_format)
         dictionary["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in dictionary:
             del dictionary["_sa_instance_state"]
